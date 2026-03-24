@@ -390,6 +390,126 @@ Swap  =  almaari mein saman (slow 🐢)
 
 ---
 
+## 1️⃣1️⃣ Project — health_monitor.sh
+
+### Kya karta hai yeh script?
+```
+5 websites pe curl request bhejta hai
+        ↓
+HTTP status code check karta hai
+        ↓
+200 = UP ✅  |  baaki = DOWN ❌
+        ↓
+Log file mein save karta hai timestamp ke saath
+```
+
+### /dev/null kya hai?
+```
+/dev/null = Linux ka dustbin / black hole
+Jo bhi bhejo → gayab ho jaata hai
+Disk space nahi leta — hamesha empty!
+```
+
+### curl flags jo use kiye:
+```
+-L            →  redirects follow karo (301 bhi handle hoga)
+-o /dev/null  →  response body dustbin mein phenko
+-s            →  silent mode
+-w "%{http_code}" →  sirf status code print karo
+```
+
+### Pehla run vs doosra run:
+```
+Pehla run (bina -L):
+DOWN [301] google.com    ← redirect follow nahi kiya
+
+Doosra run (with -L):
+UP   [200] google.com    ← -L ne redirect follow kiya ✅
+```
+
+### Script:
+```bash
+#!/bin/sh
+
+URLS="https://google.com https://github.com https://api.github.com https://youtube.com https://stackoverflow.com"
+
+LOGFILE=~/devops/notes/health_$(date +%Y%m%d).log
+
+echo "=== Health Check: $(date) ===" >> $LOGFILE
+
+for url in $URLS; do
+    CODE=$(curl -L -o /dev/null -s -w "%{http_code}" "$url")
+    if [ "$CODE" -eq 200 ]; then
+        echo "UP   [$CODE] $url" >> $LOGFILE
+    else
+        echo "DOWN [$CODE] $url" >> $LOGFILE
+    fi
+done
+
+echo "Log saved: $LOGFILE"
+cat $LOGFILE
+```
+
+### Script ke concepts:
+```
+URLS="..."              →  websites ki list
+date +%Y%m%d            →  20260324 format (filename mein)
+for url in $URLS        →  har URL ke liye repeat karo
+CODE=$(curl ...)        →  status code variable mein save karo
+if [ "$CODE" -eq 200 ]  →  agar 200 hai → UP, warna DOWN
+-eq                     →  equal to (numbers ke liye)
+>>                      →  append karo log file mein
+```
+
+---
+
+## 1️⃣2️⃣ Cron — automatic scheduling
+
+### Cron kya hai?
+```
+Cron = Linux ka alarm clock + scheduler
+
+Phone mein alarm set karte ho → "7 baje bajao"
+Cron mein set karte ho → "har 30 min script chalao"
+```
+
+### Cron format — yaad karo:
+```
+*/30  *  *  *  *  command
+  ↑   ↑  ↑  ↑  ↑
+  │   │  │  │  └── weekday (0=Sunday, 6=Saturday)
+  │   │  │  └───── month   (1-12)
+  │   │  └──────── day     (1-31)
+  │   └─────────── hour    (0-23)
+  └─────────────── minute  (0-59)
+
+*/30 = har 30 minute
+*    = any (koi bhi)
+```
+
+### Common cron examples:
+```
+*/30 * * * *  =  har 30 minute
+0 * * * *     =  har ghante pe
+0 2 * * *     =  har din 2 AM pe
+* * * * *     =  har minute pe
+0 9 * * 1     =  har Monday 9 AM pe
+```
+
+### Commands:
+```bash
+crontab -e   # cron edit karo
+crontab -l   # cron list dekho
+crontab -r   # sab cron delete karo (careful!)
+```
+
+### Humara cron:
+```bash
+*/30 * * * * /bin/sh /root/devops/scripts/health_monitor.sh
+```
+
+---
+
 ## ✅ Day 2 Checklist
 
 - [x] Process concept samjha
@@ -413,6 +533,13 @@ Swap  =  almaari mein saman (slow 🐢)
 - [x] df -h — disk usage
 - [x] free -h — RAM usage
 - [x] && operator
+- [x] health_monitor.sh banaya
+- [x] curl -L flag — redirects follow karna
+- [x] /dev/null concept samjha
+- [x] for loop use kiya script mein
+- [x] if-else use kiya script mein
+- [x] Cron setup kiya — har 30 min auto run
+- [x] GitHub pe push kiya
 
 ---
 
@@ -438,4 +565,4 @@ Swap  =  almaari mein saman (slow 🐢)
 
 ---
 
-> 💡 **Kal — Day 3:** Shell Scripting Deep Dive — variables, if-else, loops, functions + 3 projects!
+> 💡 **Kal — Day 3:** Shell Scripting Deep Dive — variables, if-else, loops, functions + 3 projects!`
