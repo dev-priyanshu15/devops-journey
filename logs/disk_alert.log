@@ -55,3 +55,22 @@
 [2026-03-27 02:40:49] [OK] /mnt/host/wslg/versions.txt is at 0%
 [2026-03-27 02:40:49] [OK] /mnt/host/wslg/doc is at 0%
 [2026-03-27 02:40:49] [INFO] === Disk Check Complete ===
+[2026-03-27 02:57:25] [INFO] === Disk Check Started ===
+[2026-03-27 02:57:25] [OK] /lib/modules/6.6.87.2-microsoft-standard-WSL2 is at 0%
+[2026-03-27 02:57:25] [OK] /mnt/host/wsl is at 0%
+[2026-03-27 02:57:25] [OK] /usr/lib/wsl/drivers is at 52%
+[2026-03-27 02:57:25] [OK] / is at 0%
+[2026-03-27 02:57:25] [OK] /mnt/host/wslg is at 0%
+[2026-03-27 02:57:25] [OK] /mnt/host/wslg/distro is at 0%
+[2026-03-27 02:57:25] [OK] /usr/lib/wsl/lib is at 0%
+[2026-03-27 02:57:25] [OK] /dev is at 0%
+[2026-03-27 02:57:25] [OK] /run is at 0%
+[2026-03-27 02:57:25] [OK] /run/lock is at 0%
+[2026-03-27 02:57:26] [OK] /run/shm is at 0%
+[2026-03-27 02:57:26] [OK] /dev/shm is at 0%
+[2026-03-27 02:57:26] [OK] /run/user is at 0%
+[2026-03-27 02:57:26] [OK] /tmp/.X11-unix is at 0%
+[2026-03-27 02:57:26] [OK] /mnt/host/c is at 52%
+[2026-03-27 02:57:26] [OK] /mnt/host/wslg/versions.txt is at 0%
+[2026-03-27 02:57:26] [OK] /mnt/host/wslg/doc is at 0%
+[2026-03-27 02:57:26] [INFO] === Disk Check Complete ===
